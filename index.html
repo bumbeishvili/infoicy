@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infoicy - Web Tools for Data Visualization and Analysis</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .tools-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .tool-card h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-favicon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .tool-card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .tool-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .tool-link:hover {
+            text-decoration: underline;
+        }
+
+        .tool-content {
+            flex: 1;
+        }
+
+        .tool-image {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Infoicy</h1>
+            <p class="description">Powerful web tools for data visualization and analysis</p>
+        </header>
+
+        <ul class="tools-list">
+            <li class="tool-card">
+                <div class="tool-content">
+                    <h2>
+                        <img src="https://insert-map.infoicy.com/favicon.svg" alt="" class="tool-favicon">
+                        Interactive Map Creator
+                    </h2>
+                    <p>Create customizable maps with pins and polygons. Generate embeddable code to integrate interactive maps into your website.</p>
+                    <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5rem;">🔗 insert-map.infoicy.com</p>
+                    <a href="https://insert-map.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">Try Map Creator →</a>
+                </div>
+                <img src="https://insert-map.infoicy.com/preview.svg" alt="Map Creator Preview" class="tool-image">
+            </li>
+
+            <li class="tool-card">
+                <div class="tool-content">
+                    <h2>
+                        <img src="https://crowdcounter.infoicy.com/crowd-icon.svg" alt="" class="tool-favicon">
+                        Crowd Counter
+                    </h2>
+                    <p>Upload images and leverage AI models with computer vision to automatically calculate the number of people in photographs.</p>
+                    <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5rem;">🔗 crowdcounter.infoicy.com</p>
+                    <a href="https://crowdcounter.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">Try Crowd Counter →</a>
+                </div>
+                <img src="https://crowdcounter.infoicy.com/social-share.svg" alt="Crowd Counter Preview" class="tool-image">
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
