@@ -44,195 +44,671 @@
     <link rel="alternate icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/favicon.png">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-bg: #06080d;
+            --color-surface: #0e1117;
+            --color-surface-elevated: #161b22;
+            --color-border: rgba(255, 255, 255, 0.06);
+            --color-text: #e6edf3;
+            --color-text-muted: #8b949e;
+            --color-accent: #58a6ff;
+            --color-accent-glow: rgba(88, 166, 255, 0.15);
+            --radius: 16px;
+            --radius-lg: 24px;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
-            color: #333;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            overflow-x: hidden;
         }
 
-        .container {
+        /* Animated background */
+        .bg-glow {
+            position: fixed;
+            top: -40%;
+            left: -20%;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(88, 166, 255, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            animation: driftGlow 20s ease-in-out infinite alternate;
+        }
+
+        .bg-glow-2 {
+            position: fixed;
+            bottom: -40%;
+            right: -20%;
+            width: 70vw;
+            height: 70vw;
+            background: radial-gradient(circle, rgba(163, 113, 247, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            animation: driftGlow2 25s ease-in-out infinite alternate;
+        }
+
+        @keyframes driftGlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(10vw, 10vh); }
+        }
+
+        @keyframes driftGlow2 {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-8vw, -8vh); }
+        }
+
+        .page-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem 2rem;
         }
 
-        header {
-            text-align: center;
-            padding: 3rem 0;
-        }
-
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
-        }
-
-        .description {
-            color: #666;
-            margin-bottom: 3rem;
-        }
-
-        .tools-list {
-            list-style: none;
-            padding: 0;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-
-        .tool-card {
-            background: white;
-            border-radius: 8px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease;
-            display: grid;
-            gap: 1.5rem;
-            grid-template-columns: 1fr auto;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-2px);
-        }
-
-        .tool-card h2 {
-            color: #2c3e50;
-            margin-top: 0;
+        .nav-logo {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-        }
-
-        .tool-favicon {
-            width: 24px;
-            height: 24px;
-        }
-
-        .tool-card p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .tool-link {
-            display: inline-block;
-            color: #3498db;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-text);
             text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 12px rgba(88, 166, 255, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-text);
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem 4rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: 100px;
+            padding: 0.4rem 1rem;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-bottom: 2rem;
             font-weight: 500;
         }
 
+        .hero-badge-dot {
+            width: 6px;
+            height: 6px;
+            background: #3fb950;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            margin: 0 0 1.5rem;
+            background: linear-gradient(135deg, #e6edf3 30%, #58a6ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--color-text-muted);
+            max-width: 560px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-accent);
+            color: #000;
+            text-decoration: none;
+            padding: 0.75rem 1.75rem;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(88, 166, 255, 0.5);
+        }
+
+        /* Section */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 6rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-accent);
+            margin: 0 0 0.5rem;
+        }
+
+        .section-header p {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+
+        /* Tools Grid */
+        .tools-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+
+        .tool-card {
+            position: relative;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius);
+            padding: 0;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .tool-card:hover {
+            border-color: rgba(88, 166, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(88, 166, 255, 0.06);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-card-image {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            background: var(--color-surface-elevated);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .tool-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 1.25rem;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tool-card:hover .tool-card-image img {
+            transform: scale(1.05);
+        }
+
+        .tool-card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .tool-card h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .tool-favicon {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+        }
+
+        .tool-card p {
+            color: var(--color-text-muted);
+            margin: 0 0 1.25rem;
+            font-size: 0.875rem;
+            line-height: 1.65;
+            flex: 1;
+        }
+
+        .tool-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tool-domain {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            opacity: 0.6;
+            font-weight: 500;
+        }
+
+        .tool-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
         .tool-link:hover {
+            gap: 0.6rem;
+        }
+
+        .tool-link svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+
+        .tool-link:hover svg {
+            transform: translateX(2px);
+        }
+
+        /* New/upgraded badge */
+        .tool-badge-new {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: linear-gradient(135deg, #3fb950, #2ea043);
+            color: #fff;
+            padding: 0.15rem 0.5rem;
+            border-radius: 100px;
+            margin-left: 0.4rem;
+            vertical-align: middle;
+            box-shadow: 0 0 10px rgba(63, 185, 80, 0.3);
+        }
+
+        .tool-card-footer-stacked {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .tool-card-footer-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tool-link-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--color-accent);
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 100px;
+            transition: all 0.25s ease;
+            box-shadow: 0 0 12px rgba(88, 166, 255, 0.2);
+        }
+
+        .tool-link-primary:hover {
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .tool-link-primary svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .tool-link-legacy {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            opacity: 0.5;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .tool-link-legacy:hover {
+            opacity: 0.8;
             text-decoration: underline;
         }
 
-        .tool-content {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--color-border);
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--color-text-muted);
+            font-size: 0.8rem;
         }
 
-        .tool-image {
-            width: 180px;
-            height: 180px;
-            object-fit: contain;
-            border-radius: 8px;
+        .footer a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: var(--color-text);
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.7s ease forwards;
+        }
+
+        .fade-up:nth-child(1) { animation-delay: 0.05s; }
+        .fade-up:nth-child(2) { animation-delay: 0.1s; }
+        .fade-up:nth-child(3) { animation-delay: 0.15s; }
+        .fade-up:nth-child(4) { animation-delay: 0.2s; }
+        .fade-up:nth-child(5) { animation-delay: 0.25s; }
+        .fade-up:nth-child(6) { animation-delay: 0.3s; }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .tools-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
             .tools-list {
                 grid-template-columns: 1fr;
             }
+
+            .hero {
+                padding: 3rem 1.5rem 2rem;
+            }
+
+            .navbar {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .section {
+                padding: 1.5rem 1.5rem 4rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Infoicy</h1>
-            <p class="description">Powerful web tools for data visualization and analysis</p>
-        </header>
+    <div class="bg-glow"></div>
+    <div class="bg-glow-2"></div>
 
-        <ul class="tools-list">
-            <li class="tool-card">
-                <div class="tool-content">
-                    <h2>
-                        <img src="https://insert-map.infoicy.com/favicon.svg" alt="" class="tool-favicon">
-                        Interactive Map Creator
-                    </h2>
-                    <p>Create customizable maps with pins and polygons. Generate embeddable code to integrate interactive maps into your website.</p>
-                    <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5rem;">🔗 insert-map.infoicy.com</p>
-                    <a href="https://insert-map.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">Try Map Creator →</a>
-                </div>
-                <img src="https://insert-map.infoicy.com/preview.svg" alt="Map Creator Preview" class="tool-image">
-            </li>
+    <div class="page-wrapper">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <a href="/" class="nav-logo">
+                <span class="nav-logo-dot"></span>
+                Infoicy
+            </a>
+            <div class="nav-links">
+                <a href="#tools">Tools</a>
+                <a href="https://github.com/niceBoys" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </nav>
 
-            <li class="tool-card">
-                <div class="tool-content">
-                    <h2>
-                        <img src="https://crowdcounter.infoicy.com/crowd-icon.svg" alt="" class="tool-favicon">
-                        Crowd Counter
-                    </h2>
-                    <p>Upload images and leverage AI models with computer vision to automatically calculate the number of people in photographs.</p>
-                    <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5rem;">🔗 crowdcounter.infoicy.com</p>
-                    <a href="https://crowdcounter.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">Try Crowd Counter →</a>
-                </div>
-                <img src="https://crowdcounter.infoicy.com/social-share.svg" alt="Crowd Counter Preview" class="tool-image">
-            </li>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                Free &amp; open-source tools
+            </div>
+            <h1>Build smarter with powerful web&nbsp;tools</h1>
+            <p>Maps, invoices, AI travel planning, education, stock analysis, and more — all free, no signup required.</p>
+            <a href="#tools" class="hero-cta">
+                Explore Tools
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </section>
 
-            <li class="tool-card">
-                <div class="tool-content">
-                    <h2>
-                        <img src="https://invoice.infoicy.com/favicon.svg" alt="" class="tool-favicon">
-                        Invoice Generator
-                    </h2>
-                    <p>Create professional invoices in seconds with multiple templates. Generate and download PDF invoices instantly, no signup required.</p>
-                    <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5rem;">🔗 invoice.infoicy.com</p>
-                    <a href="https://invoice.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">Try Invoice Generator →</a>
-                </div>
-                <img src="https://invoice.infoicy.com/og-image.svg" alt="Invoice Generator Preview" class="tool-image">
-            </li>
+        <!-- Tools Section -->
+        <section class="section" id="tools">
+            <div class="section-header">
+                <h2>Our Tools</h2>
+                <p>Everything you need, right in your browser</p>
+            </div>
 
-            <li class="tool-card">
-                <div class="tool-content">
-                    <h2>
-                        <img src="https://travel.infoicy.com/assets/images/favicon.svg" alt="" class="tool-favicon">
-                        AI Travel Assistant
-                    </h2>
-                    <p>Interactive AI-powered travel planning assistant with real-time mapping, personalized recommendations, and expert travel guides.</p>
-                    <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5rem;">🔗 travel.infoicy.com</p>
-                    <a href="https://travel.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">Try Travel Assistant →</a>
-                </div>
-                <img src="https://travel.infoicy.com/assets/images/social-share.png" alt="AI Travel Assistant Preview" class="tool-image">
-            </li>
+            <ul class="tools-list">
+                <li class="tool-card fade-up">
+                    <div class="tool-card-image">
+                        <img src="https://insert-map.infoicy.com/preview.svg" alt="Map Creator Preview">
+                    </div>
+                    <div class="tool-card-body">
+                        <h2>
+                            <img src="https://insert-map.infoicy.com/favicon.svg" alt="" class="tool-favicon">
+                            Map Creator
+                        </h2>
+                        <p>Create customizable maps with pins and polygons. Generate embeddable code to integrate interactive maps into your website.</p>
+                        <div class="tool-card-footer">
+                            <span class="tool-domain">insert-map.infoicy.com</span>
+                            <a href="https://insert-map.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">
+                                Try it
+                                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </li>
 
-            <li class="tool-card">
-                <div class="tool-content">
-                    <h2>
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxNiIgZmlsbD0iIzFBNzNFOCIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjEyIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMCAyMEMxMCAxNiAxMyAxMyAxNiAxM0MxOSAxMyAyMiAxNiAyMiAyMEMyMiAyNCAyMCAyNiAxNiAyNkMxMiAyNiAxMCAyNCAxMCAyMFoiIGZpbGw9IiMxQTczRTgiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjE1IiByPSIyIiBmaWxsPSIjMUE3M0U4Ii8+PGNpcmNsZSBjeD0iMTkiIGN5PSIxNSIgcj0iMiIgZmlsbD0iIzFBNzNFOCIvPjwvc3ZnPg==" alt="" class="tool-favicon">
-                        AI Teaching Assistant
-                    </h2>
-                    <p>Experience personalized learning with our AI Teaching Assistant. Get instant answers, explanations, and guidance through natural voice conversations.</p>
-                    <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5rem;">🔗 speaking.infoicy.com</p>
-                    <a href="https://speaking.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">Try Teaching Assistant →</a>
-                </div>
-                <img src="https://speaking.infoicy.com/assets/meta-social.png" alt="AI Teaching Assistant Preview" class="tool-image">
-            </li>
+                <li class="tool-card fade-up">
+                    <div class="tool-card-image">
+                        <img src="https://crowdcounter.infoicy.com/social-share.svg" alt="Crowd Counter Preview">
+                    </div>
+                    <div class="tool-card-body">
+                        <h2>
+                            <img src="https://crowdcounter.infoicy.com/crowd-icon.svg" alt="" class="tool-favicon">
+                            Crowd Counter
+                        </h2>
+                        <p>Upload images and leverage AI with computer vision to automatically count people in photographs.</p>
+                        <div class="tool-card-footer">
+                            <span class="tool-domain">crowdcounter.infoicy.com</span>
+                            <a href="https://crowdcounter.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">
+                                Try it
+                                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </li>
 
-            <li class="tool-card">
-                <div class="tool-content">
-                    <h2>
-                        <img src="https://stock.infoicy.com/favicon.svg" alt="" class="tool-favicon">
-                        Stock Analysis Dashboard
-                    </h2>
-                    <p>Professional stock analysis dashboard with real-time market data, technical indicators, fundamental analysis, and AI-powered insights for informed investment decisions.</p>
-                    <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5rem;">🔗 stock.infoicy.com</p>
-                    <a href="https://stock.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">Try Stock Analysis →</a>
-                </div>
-                <img src="https://stock.infoicy.com/social-thumbnail.svg" alt="Stock Analysis Dashboard Preview" class="tool-image">
-            </li>
-        </ul>
+                <li class="tool-card fade-up">
+                    <div class="tool-card-image">
+                        <img src="https://invoice.infoicy.com/og-image.svg" alt="Invoice Generator Preview">
+                    </div>
+                    <div class="tool-card-body">
+                        <h2>
+                            <img src="https://invoice.infoicy.com/favicon.svg" alt="" class="tool-favicon">
+                            Invoice Generator
+                            <span class="tool-badge-new">New Version</span>
+                        </h2>
+                        <p>Create professional invoices in seconds with multiple templates. Download PDFs instantly, no signup required.</p>
+                        <div class="tool-card-footer-stacked">
+                            <div class="tool-card-footer-row">
+                                <span class="tool-domain">invoicelet.com</span>
+                                <a href="https://invoicelet.com" class="tool-link-primary" target="_blank" rel="noopener noreferrer">
+                                    Try Invoicelet
+                                    <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </a>
+                            </div>
+                            <div class="tool-card-footer-row">
+                                <span class="tool-domain">invoice.infoicy.com</span>
+                                <a href="https://invoice.infoicy.com" class="tool-link-legacy" target="_blank" rel="noopener noreferrer">Classic version &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="tool-card fade-up">
+                    <div class="tool-card-image">
+                        <img src="https://travel.infoicy.com/assets/images/social-share.png" alt="AI Travel Assistant Preview">
+                    </div>
+                    <div class="tool-card-body">
+                        <h2>
+                            <img src="https://travel.infoicy.com/assets/images/favicon.svg" alt="" class="tool-favicon">
+                            AI Travel Assistant
+                        </h2>
+                        <p>AI-powered travel planning with real-time mapping, personalized recommendations, and expert travel guides.</p>
+                        <div class="tool-card-footer">
+                            <span class="tool-domain">travel.infoicy.com</span>
+                            <a href="https://travel.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">
+                                Try it
+                                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="tool-card fade-up">
+                    <div class="tool-card-image">
+                        <img src="https://speaking.infoicy.com/assets/meta-social.png" alt="AI Teaching Assistant Preview">
+                    </div>
+                    <div class="tool-card-body">
+                        <h2>
+                            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSIxNiIgZmlsbD0iIzFBNzNFOCIvPjxjaXJjbGUgY3g9IjE2IiBjeT0iMTYiIHI9IjEyIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xMCAyMEMxMCAxNiAxMyAxMyAxNiAxM0MxOSAxMyAyMiAxNiAyMiAyMEMyMiAyNCAyMCAyNiAxNiAyNkMxMiAyNiAxMCAyNCAxMCAyMFoiIGZpbGw9IiMxQTczRTgiLz48Y2lyY2xlIGN4PSIxMyIgY3k9IjE1IiByPSIyIiBmaWxsPSIjMUE3M0U4Ii8+PGNpcmNsZSBjeD0iMTkiIGN5PSIxNSIgcj0iMiIgZmlsbD0iIzFBNzNFOCIvPjwvc3ZnPg==" alt="" class="tool-favicon">
+                            Teaching Assistant
+                        </h2>
+                        <p>Personalized learning with instant answers, explanations, and guidance through natural voice conversations.</p>
+                        <div class="tool-card-footer">
+                            <span class="tool-domain">speaking.infoicy.com</span>
+                            <a href="https://speaking.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">
+                                Try it
+                                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="tool-card fade-up">
+                    <div class="tool-card-image">
+                        <img src="https://stock.infoicy.com/social-thumbnail.svg" alt="Stock Analysis Dashboard Preview">
+                    </div>
+                    <div class="tool-card-body">
+                        <h2>
+                            <img src="https://stock.infoicy.com/favicon.svg" alt="" class="tool-favicon">
+                            Stock Analysis
+                        </h2>
+                        <p>Professional stock dashboard with real-time data, technical indicators, fundamentals, and AI-powered insights.</p>
+                        <div class="tool-card-footer">
+                            <span class="tool-domain">stock.infoicy.com</span>
+                            <a href="https://stock.infoicy.com" class="tool-link" target="_blank" rel="noopener noreferrer">
+                                Try it
+                                <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 Infoicy. All tools are free and open source.</p>
+        </footer>
     </div>
 </body>
 </html>
